@@ -1,10 +1,26 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import expressModel from './Schema/schema.js';
+import mongoose from 'mongoose';
+import cors from 'cors';
 
 
 const app = express(); 
 
-const PORT = 3230
+dotenv.config();
+//middlewares
+app.use(cors());
+app.use(express.json());
+
+const PORT = 1230|| process.env.PORT;
+const db = process.env.DB_URL;
+
+mongoose.connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,  
+}).then(() => console.log('Connected to DB'))
+.catch(err => console.log(err));
+
 
 app.get ('/',(req,res)=> {
     //res.send (to send respnse to the user)
@@ -30,7 +46,7 @@ app.get('/users',async (req,res)=> {
 })
 
 //create a user 
-app.post('/user',async (req,res)=>{
+app.post('/user', async (req,res)=>{
     const {firstname,lastname,dateOfBirth,school} = req.body;
     const newUser =await expressModel.create({   
             firstname,

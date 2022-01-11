@@ -11,7 +11,9 @@ const expressSchema = Schema({
     },
     dateOfBirth:{
         type: Date,
-        required:true
+        required:true,
+        min: '2020-09-22',
+        max: '2022-09-14',
 
     },
     school:{
@@ -19,5 +21,5 @@ const expressSchema = Schema({
         required: true,
     },
 });
-const expressModel=model("express",expressSchema);
+const expressModel=model('express',expressSchema);
 export default expressModel;
